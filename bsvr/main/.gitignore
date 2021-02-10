@@ -2,3 +2,4 @@ main
 out/
 data/*.json
 main
+ins_*

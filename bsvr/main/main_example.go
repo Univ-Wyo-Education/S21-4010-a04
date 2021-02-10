@@ -1,5 +1,6 @@
 package main
 
+/*
 import (
 	"net/http"
 
@@ -14,3 +15,4 @@ func getRespHandler_TemplateFunction(cc *cli.CLI) HandlerFunc {
 		// xyzzy - todo
 	}
 }
+*/
