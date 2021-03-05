@@ -19,7 +19,7 @@ package main
 // List of all of the flags that are commonly used in this program
 
 import (
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 var passphraseFlag = cli.StringFlag{

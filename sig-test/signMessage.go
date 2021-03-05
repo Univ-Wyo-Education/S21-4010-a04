@@ -23,7 +23,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/accounts/keystore" //
 	"github.com/ethereum/go-ethereum/crypto"            //
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 /*
@@ -49,11 +49,11 @@ Sign the message with a keyfile.
 To sign a message contained in a file, use the --msgfile flag.
 `,
 	Flags: []cli.Flag{
-		passphraseFlag,
-		jsonFlag,
-		msgfileFlag,
-		debugFlag,
-		genMsgFlag,
+		&passphraseFlag,
+		&jsonFlag,
+		&msgfileFlag,
+		&debugFlag,
+		&genMsgFlag,
 	},
 	Action: ActionSignMessage,
 }

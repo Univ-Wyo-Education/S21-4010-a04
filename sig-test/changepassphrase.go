@@ -23,11 +23,12 @@ import (
 	"time"
 
 	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 var commandChangePassphrase = cli.Command{
-	Name: "change-passphrase",
+	Name:    "change-passphrase",
+	Aliases: []string{"change-password"},
 	Usage: `change the passphrase on a keyfile
                  sig-test changepassphrase --newname <newKeyFileName.json> <ExistingKeyFile.json> 
                  if <newKeyFileName.json> is "-" then the existing file will be overwritten with the new one.
@@ -39,11 +40,11 @@ var commandChangePassphrase = cli.Command{
 Change the passphrase/password of a keyfile.  
 `,
 	Flags: []cli.Flag{
-		passphraseFlag,    // --passwordfile <filename> - from common-flags.go
-		newPassphraseFlag, // --newpasswordfile <filename> - from common-flags.go
-		newNameFlag,
-		defaultNameFlag,
-		debugFlag, // --debug Flag1,Flag2,... - from common-flags.go
+		&passphraseFlag,    // --passwordfile <filename> - from common-flags.go
+		&newPassphraseFlag, // --newpasswordfile <filename> - from common-flags.go
+		&newNameFlag,
+		&defaultNameFlag,
+		&debugFlag, // --debug Flag1,Flag2,... - from common-flags.go
 	},
 	Action: ActionChangeKeyfilePassword,
 }
@@ -61,9 +62,9 @@ var commandChangePassword = cli.Command{
 Change the passphrase/password of a keyfile.  
 `,
 	Flags: []cli.Flag{
-		passphraseFlag,    // --passwordfile <filename> - from common-flags.go
-		newPassphraseFlag, // --newpasswordfile <filename> - from common-flags.go
-		debugFlag,         // --debug Flag1,Flag2,... - from common-flags.go
+		&passphraseFlag,    // --passwordfile <filename> - from common-flags.go
+		&newPassphraseFlag, // --newpasswordfile <filename> - from common-flags.go
+		&debugFlag,         // --debug Flag1,Flag2,... - from common-flags.go
 	},
 	Action: ActionChangeKeyfilePassword,
 }

@@ -27,7 +27,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/console"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 // promptPassphrase prompts the user for a passphrase.  Set confirmation to true
@@ -188,7 +188,7 @@ func SetDebugFlags(debugFlags string) {
 
 func getMessage(ctx *cli.Context, msgarg int) []byte {
 	if file := ctx.String("msgfile"); file != "" {
-		if len(ctx.Args()) > msgarg {
+		if ctx.Args().Len() > msgarg {
 			Fatalf(2, "Can't use --msgfile and message argument at the same time.")
 		}
 		msg, err := ioutil.ReadFile(file)
@@ -196,10 +196,10 @@ func getMessage(ctx *cli.Context, msgarg int) []byte {
 			Fatalf(2, "Can't read message file: %v", err)
 		}
 		return msg
-	} else if len(ctx.Args()) == msgarg+1 {
+	} else if ctx.Args().Len() == msgarg+1 {
 		return []byte(ctx.Args().Get(msgarg))
 	}
-	Fatalf(2, "Invalid number of arguments: want %d, got %d", msgarg+1, len(ctx.Args()))
+	Fatalf(2, "Invalid number of arguments: want %d, got %d", msgarg+1, ctx.Args().Len())
 	return nil
 }
 

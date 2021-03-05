@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/keystore" //
 	"github.com/ethereum/go-ethereum/crypto"            //
 	pbUUID "github.com/pborman/uuid"                    // "github.com/pborman/uuid"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 /*
@@ -40,14 +40,14 @@ If you want to encrypt an existing private key, it can be specified by setting
 --privatekey with the location of the file containing the private key.
 `,
 	Flags: []cli.Flag{
-		passphraseFlag,
-		jsonFlag,
-		cli.StringFlag{
+		&passphraseFlag,
+		&jsonFlag,
+		&cli.StringFlag{
 			Name:  "publickey",
 			Usage: "the Public Key",
 		},
-		defaultNameFlag,
-		logFileFlag,
+		&defaultNameFlag,
+		&logFileFlag,
 	},
 	Action: ActionKeyfileFromPub,
 }

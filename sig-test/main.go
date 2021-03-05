@@ -19,9 +19,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 // Git SHA1 commit hash of the release (set via linker flags)
@@ -31,13 +30,13 @@ var app *cli.App
 
 func init() {
 	app = NewApp(gitCommit, "an Ethereum key manager")
-	app.Commands = []cli.Command{
-		commandGenerate,
-		commandInspect,
-		commandChangePassphrase,
-		commandChangePassword,
-		commandSignMessage,
-		commandVerifyMessage,
+	app.Commands = []*cli.Command{
+		&commandGenerate,
+		&commandInspect,
+		&commandChangePassphrase,
+		&commandChangePassword,
+		&commandSignMessage,
+		&commandVerifyMessage,
 	}
 }
 
@@ -51,10 +50,9 @@ func main() {
 // NewApp creates an app with sane defaults.
 func NewApp(gitCommit, usage string) *cli.App {
 	app := cli.NewApp()
-	app.Name = filepath.Base(os.Args[0])
-	app.Author = ""
-	//app.Authors = nil
-	app.Email = ""
+	// app.Name = filepath.Base(os.Args[0])
+	// app.Author = ""
+	// app.Email = ""
 	app.Version = "v1.0.0"
 	if len(gitCommit) >= 8 {
 		app.Version += "-" + gitCommit[:8]

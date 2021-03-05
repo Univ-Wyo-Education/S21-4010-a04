@@ -22,7 +22,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 var commandVerifyMessage = cli.Command{
@@ -37,9 +37,9 @@ var commandVerifyMessage = cli.Command{
 Verify the signature of the message.
 It is possible to refer to a file containing the message.`,
 	Flags: []cli.Flag{
-		jsonFlag,
-		msgfileFlag,
-		debugFlag,
+		&jsonFlag,
+		&msgfileFlag,
+		&debugFlag,
 	},
 	Action: ActionVerifyMessage,
 }

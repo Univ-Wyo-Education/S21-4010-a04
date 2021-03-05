@@ -23,7 +23,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/accounts/keystore" //
 	"github.com/ethereum/go-ethereum/crypto"            //
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 /*
@@ -56,13 +56,13 @@ Status
 	2 if some other error occures (missing file etc.)
 `,
 	Flags: []cli.Flag{
-		passphraseFlag,
-		jsonFlag,
-		cli.BoolFlag{
+		&passphraseFlag,
+		&jsonFlag,
+		&cli.BoolFlag{
 			Name:  "private",
 			Usage: "include the private key in the output",
 		},
-		debugFlag, // from common-flags.go
+		&debugFlag, // from common-flags.go
 	},
 	Action: ActionInspect,
 }
