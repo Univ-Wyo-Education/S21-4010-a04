@@ -1,14 +1,16 @@
 package lib
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 
 	"github.com/pschlump/MiscLib"
 	"github.com/pschlump/godebug"
+	"github.com/pschlump/json"
 )
+
+//	"encoding/json"
 
 // SVarI  marshals and indents a data structure into JSON.
 func SVarI(v interface{}) string {

@@ -4,18 +4,46 @@ m4_include(../S21-4010/setup.m4)
 How do blockchain wallets work
 ========================================
 
-## Assignment 04: implement public/private keys and a Wallet
+## Assignment 04: Implement public/private keys, a Wallet, and a client server.
+
+Due Date: May 14th
+
+m4_comment([[[
+   February 2021      
+Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6  
+ 7  8  9 10 11 12 13  
+14 15 16 17 18 19 20  
+21 22 23 24 25 26 27  
+28
+
+     March 2021       
+Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6  
+                ^--------------------------- Today
+ 7  8  9 10 11 12 13  
+14 15 16 17 18 19 20  
+ ^------------------- Due
+21 22 23 24 25 26 27  
+28 29 30 31           
+]]])                      
+
 
 This homework is to implement private key signature.  This is how a user
 keep other people from spending their coins.
 
 ## Recent Code Changes
 
-1. All of Assignment 4 code is now under `.../05/bsvr`.
-2. The server is changed to be a HTTP server so that a second process, the wallet, can call it and sign transactions.
-This means large changed to take some extra command line parameters in `.../05/bsvr/main/main.go` and to
+There are 3 pieces to this assignment.  
+1. There is a command line tool for key management and signing stuff.
+2. There is a "server"  this has the transaction stuff in it.
+3. There is a "client".  The :wq
+
+
+1. The server is changed to be a HTTP server so that a second process, the wallet, can call it and sign transactions.
+This means large changed to take some extra command line parameters in `./bsvr/main/main.go` and to
 have a running HTTP server.
-3. The wallet and it's client code is in `.../05/wallet-client`.
+3. The wallet and it's client code is in `./wallet-client`.
 
 ## Overview
 
@@ -58,7 +86,7 @@ killed or until you send it a shutdown message.
 ## To call the server from the client.
 
 A client has already been built that has a number of commands in it.
-It is in `.../05/wallet-client`.   You can use a browser to enter
+It is in `./wallet-client`.   You can use a browser to enter
 the URLs and call the server.   A browser is a complicated set of
 software that hides lots of details.  Instead we will just use a 
 simple command line client that performs GET requests.
@@ -132,8 +160,8 @@ This is in the client-main.go near line 133.
 
 ### Pseudo code for the send funds function on the client
 
-1. If the Memo parameter is "" then put in a constant memo - somthing like "none".
-2. Use 'RequiredOption' fucntion to get `from`, `to`, `amount` from the command line.
+1. If the Memo parameter is "" then put in a constant memo - something like "none".
+2. Use 'RequiredOption' function to get `from`, `to`, `amount` from the command line.
 3. Format a JSON message to sign
 ```
 	msg := fmt.Sprintf(`{"from":%q, "to":%q, "amount":%d}`, From, To, Amount)
@@ -141,8 +169,8 @@ This is in the client-main.go near line 133.
 4. read in the key file for the `From` account using getKeyFileFromAcct.
 5. Read in a password for this using getPassphrase
 6. Call GenerateSigntature to sign the message.
-7. Generate the URL to send - the communication end point is `/api/send-funds-to`.  It requires "from", "to", "amount", "signature", "msg", and "memo" paramters to be passed.
-8. Call DoGet with the set of paramters.
+7. Generate the URL to send - the communication end point is `/api/send-funds-to`.  It requires "from", "to", "amount", "signature", "msg", and "memo" parameters to be passed.
+8. Call DoGet with the set of parameters.
 9. Check the return status of the "GET" call, 200 indicates success, all other codes indicate an error.
 
 
@@ -151,7 +179,7 @@ This is in the client-main.go near line 133.
 
 The server should run and do lots of stuff.  You need to test the
 section where the signature is actually validated.  This is in
-`../05/cli/svr-lib.go` line 115.  If the signature is valid and
+./cli/svr-lib.go` line 115.  If the signature is valid and
 the message is valid then it should return `isValid` as true.  If an error occurs,
 for example a bad address or some other error during the validation process,
 then return `isValid` as false and the error. Most of the code for this part of the 
@@ -159,7 +187,7 @@ assignment has been adapted from signMessage.go in sig-test.
 
 ## Helpful things (Pay special attention to this section!)
 
-`.../05/sig-test` has a full command line tool that implements signing
+`./sig-test` has a full command line tool that implements signing
 and validation of messages.   95% of the code is pulled form go-ethereum.
 This has the code in it to build the message signing.
 
@@ -177,7 +205,7 @@ to poke through.
 
 ## what to submit.
 
-Your modified version of `.../05/wallet-client/client-main.go`.
+Your modified version of `./wallet-client/client-main.go`.
 If you create more files for the client then submit those also.
 
 

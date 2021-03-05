@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -67,6 +68,8 @@ func main() {
 
 	if *ServerHostPort != "" {
 		cc.ReadGlobalData([]string{})
+		pid := fmt.Sprintf("%v\n", os.Getpid())
+		ioutil.WriteFile("./pidfile", []byte(pid), 0600)
 		var wg sync.WaitGroup
 		wg.Add(1)
 		// fmt.Printf(" Start Server: %s\n", godebug.LF())
@@ -102,35 +105,14 @@ func main() {
 func RunServer(cc *cli.CLI, ServerHostPort string) {
 
 	http.HandleFunc("/api/status", respHandlerStatus)
+	http.HandleFunc("/status", respHandlerStatus)
 	http.HandleFunc("/api/shutdown", getRespHandlerShutdown(cc))
 
 	http.HandleFunc("/api/acct-list", getRespHandlerAcctList(cc))
 	http.HandleFunc("/api/acct-value", getRespHandlerAcctValue(cc))
 	http.HandleFunc("/api/validate-signed-message", getRespHandlerValidateSignedMessage(cc))
 	http.HandleFunc("/api/send-funds-to", getRespHandlerSendFundsTo(cc))
-	/*
-		TODO: Homework 6 ---------------------------------------------------------------------------
 
-		4	/api/load-contract (A-06)
-		5	/api/get-contract-source (A-06)
-			/api/get-contract-data (A-06)
-			/api/get-contract-private-data (A-06) (requires signed message of contract owner)
-		6	/api/call-contract-method (A-06)
-		7	/api/call-contract-method-with-funds (A-06)
-		8	/api/call-contract-view-method (A-06)
-		9	/api/get-contract-info (A-06) ( empty | name | name+owner | name+owner+hash(src) )
-				//$$name$$ ContractName
-				//Follow Go's lead, if name of functions starts with 'CAP' then public, else private.
-				//Follow Go's lead, if name of data starts with 'CAP' then public, else private.
-
-		Misc Networking ---------------------------------------------------------------------------
-
-		3	/api/send-block	( bkn= or bkh= )
-			/api/receive-block {post}
-
-		TODO: Remember every request requires an Account/Pin to auth it.
-			this will be done with ValidAcctPin(res,req) -> Bool
-	*/
 	http.Handle("/", http.FileServer(http.Dir(*Dir)))
 	log.Fatal(http.ListenAndServe(ServerHostPort, nil))
 

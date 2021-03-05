@@ -1,4 +1,6 @@
 bsvr/merkle/aya_test.go
+,*
+bsvr/main/pidfile
 bsvr/merkle/merkle-aya.go
 bsvr/merkle/out.out
 steps

@@ -7,5 +7,6 @@ require (
 	github.com/pborman/uuid v0.0.0-20170112150404-1b00554d8222
 	github.com/pschlump/MiscLib v1.0.0
 	github.com/pschlump/godebug v1.0.1
+	github.com/pschlump/json v0.0.0-20180316172947-0d2e6a308e08
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
 )

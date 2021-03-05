@@ -710,19 +710,25 @@ ol {
 
 <h1>How do blockchain wallets work</h1>
 
-<h2>Assignment 04: implement public/private keys and a Wallet</h2>
+<h2>Assignment 04: Implement public/private keys, a Wallet, and a client server.</h2>
+
+<p>Due Date: May 14th</p>
 
 <p>This homework is to implement private key signature.  This is how a user
 keep other people from spending their coins.</p>
 
 <h2>Recent Code Changes</h2>
 
+<p>There are 3 pieces to this assignment.<br />
+1. There is a command line tool for key management and signing stuff.
+2. There is a &ldquo;server&rdquo;  this has the transaction stuff in it.
+3. There is a &ldquo;client&rdquo;.  The :wq</p>
+
 <ol>
-<li>All of Assignment 4 code is now under <code>.../05/bsvr</code>.</li>
 <li>The server is changed to be a HTTP server so that a second process, the wallet, can call it and sign transactions.
-This means large changed to take some extra command line parameters in <code>.../05/bsvr/main/main.go</code> and to
+This means large changed to take some extra command line parameters in <code>./bsvr/main/main.go</code> and to
 have a running HTTP server.</li>
-<li>The wallet and it&rsquo;s client code is in <code>.../05/wallet-client</code>.</li>
+<li>The wallet and it&rsquo;s client code is in <code>./wallet-client</code>.</li>
 </ol>
 
 <h2>Overview</h2>
@@ -765,7 +771,7 @@ killed or until you send it a shutdown message.</p>
 <h2>To call the server from the client.</h2>
 
 <p>A client has already been built that has a number of commands in it.
-It is in <code>.../05/wallet-client</code>.   You can use a browser to enter
+It is in <code>./wallet-client</code>.   You can use a browser to enter
 the URLs and call the server.   A browser is a complicated set of
 software that hides lots of details.  Instead we will just use a
 simple command line client that performs GET requests.</p>
@@ -878,8 +884,8 @@ This is in the client-main.go near line 133.</li>
 <h3>Pseudo code for the send funds function on the client</h3>
 
 <ol>
-<li>If the Memo parameter is &ldquo;&rdquo; then put in a constant memo - somthing like &ldquo;none&rdquo;.</li>
-<li>Use &lsquo;RequiredOption&rsquo; fucntion to get <code>from</code>, <code>to</code>, <code>amount</code> from the command line.</li>
+<li>If the Memo parameter is &ldquo;&rdquo; then put in a constant memo - something like &ldquo;none&rdquo;.</li>
+<li>Use &lsquo;RequiredOption&rsquo; function to get <code>from</code>, <code>to</code>, <code>amount</code> from the command line.</li>
 
 <li><p>Format a JSON message to sign</p>
 
@@ -892,9 +898,9 @@ This is in the client-main.go near line 133.</li>
 
 <li><p>Call GenerateSigntature to sign the message.</p></li>
 
-<li><p>Generate the URL to send - the communication end point is <code>/api/send-funds-to</code>.  It requires &ldquo;from&rdquo;, &ldquo;to&rdquo;, &ldquo;amount&rdquo;, &ldquo;signature&rdquo;, &ldquo;msg&rdquo;, and &ldquo;memo&rdquo; paramters to be passed.</p></li>
+<li><p>Generate the URL to send - the communication end point is <code>/api/send-funds-to</code>.  It requires &ldquo;from&rdquo;, &ldquo;to&rdquo;, &ldquo;amount&rdquo;, &ldquo;signature&rdquo;, &ldquo;msg&rdquo;, and &ldquo;memo&rdquo; parameters to be passed.</p></li>
 
-<li><p>Call DoGet with the set of paramters.</p></li>
+<li><p>Call DoGet with the set of parameters.</p></li>
 
 <li><p>Check the return status of the &ldquo;GET&rdquo; call, 200 indicates success, all other codes indicate an error.</p></li>
 </ol>
@@ -903,15 +909,15 @@ This is in the client-main.go near line 133.</li>
 
 <p>The server should run and do lots of stuff.  You need to test the
 section where the signature is actually validated.  This is in
-<code>../05/cli/svr-lib.go</code> line 115.  If the signature is valid and
-the message is valid then it should return <code>isValid</code> as true.  If an error occurs,
+./cli/svr-lib.go<code>line 115.  If the signature is valid and
+the message is valid then it should return</code>isValid<code>as true.  If an error occurs,
 for example a bad address or some other error during the validation process,
-then return <code>isValid</code> as false and the error. Most of the code for this part of the
+then return</code>isValid` as false and the error. Most of the code for this part of the
 assignment has been adapted from signMessage.go in sig-test.</p>
 
 <h2>Helpful things (Pay special attention to this section!)</h2>
 
-<p><code>.../05/sig-test</code> has a full command line tool that implements signing
+<p><code>./sig-test</code> has a full command line tool that implements signing
 and validation of messages.   95% of the code is pulled form go-ethereum.
 This has the code in it to build the message signing.</p>
 
@@ -929,7 +935,7 @@ to poke through.</p>
 
 <h2>what to submit.</h2>
 
-<p>Your modified version of <code>.../05/wallet-client/client-main.go</code>.
+<p>Your modified version of <code>./wallet-client/client-main.go</code>.
 If you create more files for the client then submit those also.</p>
 
 <h2>Notes</h2>
