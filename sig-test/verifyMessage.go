@@ -28,11 +28,11 @@ import (
 var commandVerifyMessage = cli.Command{
 	Name: "verify-message",
 	Usage: `verify the signature of a signed message
-                ./sig-test very-message Address Signature "message"
+                ./sig-test very-message Address Signature "message" "original-message"
                     or
-                ./sig-test very-message --json Address Signature "message"
+                ./sig-test very-message --json Address Signature "message" "original-message"
 `,
-	ArgsUsage: "<address> <signature> <message>",
+	ArgsUsage: "<address> <signature> <hash-message> <original-message>",
 	Description: `
 Verify the signature of the message.
 It is possible to refer to a file containing the message.`,
@@ -49,7 +49,15 @@ It is possible to refer to a file containing the message.`,
 func ActionVerifyMessage(ctx *cli.Context) error {
 	addressStr := ctx.Args().First()
 	signatureHex := ctx.Args().Get(1)
-	message := getMessage(ctx, 2) // xyzzy - change to return a string!
+	message := getMessage(ctx, 2, 3)
+	origMessage := ctx.Args().Get(3)
+
+	fmt.Printf("->%s<- original message\n", origMessage)
+	mChk := hex.EncodeToString(inMessage)
+	if mChk != message {
+		fmt.Printf("Message did not match its '''hash'''\n")
+		return fmt.Errorf("signature did not verify - invalid message")
+	}
 
 	debugFlags := ctx.String(debugFlag.Name)
 	SetDebugFlags(debugFlags)

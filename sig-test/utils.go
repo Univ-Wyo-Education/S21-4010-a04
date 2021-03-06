@@ -186,9 +186,9 @@ func SetDebugFlags(debugFlags string) {
 	}
 }
 
-func getMessage(ctx *cli.Context, msgarg int) []byte {
+func getMessage(ctx *cli.Context, atpos, msgarg int) []byte {
 	if file := ctx.String("msgfile"); file != "" {
-		if ctx.Args().Len() > msgarg {
+		if ctx.Args().Len() > atpos {
 			Fatalf(2, "Can't use --msgfile and message argument at the same time.")
 		}
 		msg, err := ioutil.ReadFile(file)
@@ -197,7 +197,7 @@ func getMessage(ctx *cli.Context, msgarg int) []byte {
 		}
 		return msg
 	} else if ctx.Args().Len() == msgarg+1 {
-		return []byte(ctx.Args().Get(msgarg))
+		return []byte(ctx.Args().Get(atpos))
 	}
 	Fatalf(2, "Invalid number of arguments: want %d, got %d", msgarg+1, ctx.Args().Len())
 	return nil

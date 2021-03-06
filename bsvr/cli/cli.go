@@ -194,8 +194,11 @@ func (cc *CLI) SendFundsTransaction(
 	tx *transactions.TransactionType,
 	err error,
 ) {
+
+	//	if isValid, err := cc.InstructorValidateSignature(from, sig, message); !isValid { // addr, sig, msg string) (isValid bool, err error) {
 	if !lib.ValidSignature(sig, message, from) { // Assignment 5 implements, just true for now.
-		return nil, fmt.Errorf("Signature not valid")
+		// return nil, fmt.Errorf("Signature not valid")
+		return nil, err
 	}
 
 	// --- Homework Section for Assignment 4 ----------------------------

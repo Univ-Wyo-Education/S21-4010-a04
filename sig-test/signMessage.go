@@ -66,7 +66,7 @@ func ActionSignMessage(ctx *cli.Context) error {
 
 	genMsg := ctx.Bool(genMsgFlag.Name)
 	if !genMsg {
-		message = getMessage(ctx, 1)
+		message = getMessage(ctx, 1, 2)
 	}
 
 	debugFlags := ctx.String(debugFlag.Name)
@@ -83,7 +83,8 @@ func ActionSignMessage(ctx *cli.Context) error {
 		fmt.Printf("{\"Signature\":%q,\"Message\":%q}", signature, messageStr)
 	} else {
 		fmt.Printf("MessageLengthInBytes: %d\n", len(messageStr))
-		fmt.Printf("Message: %s\n", messageStr)
+		fmt.Printf("Message: %s\n", message)
+		fmt.Printf("Hash of Message: %s\n", messageStr)
 		fmt.Printf("Signature: %s\n", signature)
 	}
 

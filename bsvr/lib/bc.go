@@ -5,15 +5,13 @@ import (
 	"fmt"
 
 	"github.com/Univ-Wyo-Education/S21-4010-a04/bsvr/addr"
-	// "github.com/pschlump/godebug"
 )
 
 type SignatureType string
 
-func ValidSignature(sig SignatureType, message string, from addr.AddressType) bool {
-	// TODO - xyzyz - we will validate signatures in the "Wallet" homework.  AS-05.
-	return true
-}
+// func ValidSignature(sig SignatureType, msg string, from addr.AddressType) bool {
+// 	return true
+// }
 
 // IsValidAddress returns true if the addresss is a validate looking address.
 func IsValidAddress(addrStr string) bool {
