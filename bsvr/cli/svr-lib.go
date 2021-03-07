@@ -120,15 +120,4 @@ func (cc *CLI) ValidateSignature(addrStr, signature, msg string) (isValid bool, 
 
 	isValid = true
 	return
-
-	/*
-		addr, err := addr.ParseAddr(addrStr)
-		if err != nil {
-			return
-		}
-		_ = addr
-
-		// Test Validation of Signature at this point.
-		return cc.InstructorValidateSignature(addrStr, signature, msg)
-	*/
 }

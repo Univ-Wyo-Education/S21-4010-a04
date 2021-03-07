@@ -712,7 +712,7 @@ ol {
 
 <h2>Assignment 04: Implement public/private keys, a Wallet, and a client server.</h2>
 
-<p>Due Date: May 14th</p>
+<p>Due Date: May 21</p>
 
 <p>This homework is to implement private key signature.  This is how a user
 keep other people from spending their coins.</p>
@@ -721,8 +721,8 @@ keep other people from spending their coins.</p>
 
 <p>There are 3 pieces to this assignment.<br />
 1. There is a command line tool for key management and signing stuff.
-2. There is a &ldquo;server&rdquo;  this has the transaction stuff in it.
-3. There is a &ldquo;client&rdquo;.  The :wq</p>
+2. There is a &ldquo;server&rdquo;  this has the transaction stuff in it.  You will  need to add some code to it to verify signatures.   Look in the ./bsvr/lib code.
+3. There is a &ldquo;client&rdquo;.  The client has the code for generating the signatures and sending it to the server.  You will need to add some code to it.  Look in the ./wallet-client/client-main.go code.</p>
 
 <ol>
 <li>The server is changed to be a HTTP server so that a second process, the wallet, can call it and sign transactions.
@@ -757,7 +757,7 @@ a wallet and send messages that are signed to the server.</p>
 <h2>To Start the Server</h2>
 
 <p>The server is a HTTP server.  You will need to have created a genisis
-block.  After that you can run a server on localhost with a port of 9022
+block.  After that you can run a server on localhost with a port of 9191
 with:</p>
 
 <pre><code>	$ cd 05/bsvr/main
@@ -844,19 +844,29 @@ simple command line client that performs GET requests.</p>
 
 <h2>Homework Overview.</h2>
 
+<p>Before you start on the homework there is the code in ./sig-test.   Find the code that signs a message ( ./sig-test/signMessage.go )
+and take a look. Find the code that verifies a signature, ./sig-test/verifyMessage.go.  There are examles of running
+the code in the ./sig-test/Makefile.  Try running it.
+Use the <code>sig-test</code> code
+to see what a signature should look like.</p>
+
+<p>Most of the code that you need is in the sig-test command line tool.  For the client you need to generate and send a signed
+message.  For the server you need to verify a signed message.</p>
+
 <p>Implement the client side to create and sign messages first.
 Add print statements to the server to show that you are
 getting the correct data passed from client to server.
+Print out the message, the hash of the message, the signature, and the account number.
+Then validate that the data you generate in the client is correct using ./sig-test/sig-test .
 Then when you have correct data on the server go and implement
 the server signature verify code.   Use the supplied command
 line tool, <code>sig-test</code> to validate signatures before
-you implement the server code.   Use the <code>sig-test</code> code
-to see what a signature should look like.</p>
+you implement the server code.</p>
 
 <h2>The provided client code.</h2>
 
 <p>The sample client code is in <code>wallet-client</code>.  It is in the file
-<code>client-main.go</code>.  This progam is partially complete.
+<code>client-main.go</code>.  This progam is partially complete.   Look at the details of how signatures work in the command line code.
 The code that is currently there can:</p>
 
 <ol>
@@ -866,7 +876,7 @@ The code that is currently there can:</p>
 <li>List the value of an existing account on the server.</li>
 <li>Make a request to just validate a signature with a random generated message.  This
 will require implementing the serer code to validate signatures.<br />
-This is in the <code>client-main.go</code> at line 129.  When you get this to work the
+This is in the <code>client-main.go</code> at line 161.  When you get this to work the
 part (5) should be easy.   The randomly generated message will be replace
 with the request to send funds.  All the hard work for signing is done.</li>
 <li>Send a request to the server to send funds from one account to a destination account.
@@ -874,7 +884,7 @@ The &ldquo;sign&rdquo; message part is missing.  You will need to implement this
 
 <ol>
 <li>Take the request message in JSON.</li>
-<li>Create the <code>Keccak256</code> hash of the message string.</li>
+<li>Create the <code>hex</code> of the message string.</li>
 <li>Create the signature for the hash in (2) using the users key.</li>
 <li>Send the request to the server with <code>msg</code>, <code>msgStr</code>, <code>signature</code>.
 This is in the client-main.go near line 133.</li>
@@ -909,11 +919,12 @@ This is in the client-main.go near line 133.</li>
 
 <p>The server should run and do lots of stuff.  You need to test the
 section where the signature is actually validated.  This is in
-./cli/svr-lib.go<code>line 115.  If the signature is valid and
+./bsvr/cli/svr-lib.go<code>line 115.  If the signature is valid and
 the message is valid then it should return</code>isValid<code>as true.  If an error occurs,
 for example a bad address or some other error during the validation process,
 then return</code>isValid` as false and the error. Most of the code for this part of the
-assignment has been adapted from signMessage.go in sig-test.</p>
+assignment has been adapted from signMessage.go in sig-test.    The
+code to implement is in ./bsvr/lib/svr-lib.go.</p>
 
 <h2>Helpful things (Pay special attention to this section!)</h2>
 
@@ -935,8 +946,11 @@ to poke through.</p>
 
 <h2>what to submit.</h2>
 
-<p>Your modified version of <code>./wallet-client/client-main.go</code>.
-If you create more files for the client then submit those also.</p>
+<p>Your modified version of <code>./wallet-client/client-main.go</code>.</p>
+
+<p>The ./bsvr/lib/svr-lib.go file.</p>
+
+<p>If you create more files for the client then submit those also.</p>
 
 <h2>Notes</h2>
 
