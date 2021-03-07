@@ -710,9 +710,8 @@ ol {
 
 <h1>Steps to build / test / client server.</h1>
 
-<ol>
-<li>Find out where stuff is routed.   This is where a path from a URL is converted into a function call.
-The URL, &lsquo;<a href="http://Name.com:Port/path?queryParams=Values&amp;more=val`">http://Name.com:Port/path?queryParams=Values&amp;more=val`</a> is split into
+<p>(1.) Find out where stuff is routed.   This is where a path from a URL is converted into a function call.
+The URL, &lsquo;<a href="http://Name.com:Port/path?queryParams=Values&amp;more=val`">http://Name.com:Port/path?queryParams=Values&amp;more=val`</a> is split into</p>
 
 <ol>
 <li><code>http</code> or <code>https</code> - this can be other protocals but these are the 2 common ones.</li>
@@ -723,27 +722,24 @@ The URL, &lsquo;<a href="http://Name.com:Port/path?queryParams=Values&amp;more=v
 The &ldquo;route&rdquo; or &ldquo;endpoint&rdquo; is the <code>/path</code> part.  This can be a more complex path like <code>/path/bob/somefile.html</code> and is often the location of
 a file on the system for a static file.   With a default NgINX install it will be something like <code>/var/ngnix/name.com/html/path/bob/somfile.html</code>.
 With an application server (like ours) the end point is some chunk of code in the server.</li>
-</ol></li>
 </ol>
 
 <p>In some projects you may need to add routes.  Add the routs if necessary.<br />
 Test that the routs work with some dummy calls and just a static return data.</p>
 
-<ol>
-<li><p>Split the functions that get called from the route into 2 chunks.</p>
+<p>(2.) Split the functions that get called from the route into 2 chunks.</p>
 
 <ol>
 <li>The processing of parameters into values in memory.</li>
 <li>The implementation of whatever the function is to do (this is the business logic section)</li>
-</ol></li>
+</ol>
 
-<li><p>Test the parameter processing section.   This is usually very easy.  Make client call - see code print out value on server.</p></li>
+<p>(3.) Test the parameter processing section.   This is usually very easy.  Make client call - see code print out value on server.</p>
 
-<li><p>Implement the business logic so you can call it from the command line.  This will become your automated test stuff
+<p>(4.) Implement the business logic so you can call it from the command line.  This will become your automated test stuff
 for the business logic.  You will need to be able to call this and get data out so that you can have accurate data
 to test your client with.   Usualy this means <code>wget</code> or <code>curl</code> for the command line.  You can also implement a dedicated
-set of code to test the API.  That usually will take longer.</p></li>
-</ol>
+set of code to test the API.  That usually will take longer.</p>
 
 <p>In our case some of this has been done for you look at ./sig-test - this is a command line program
 that will allow you to generate signatures and sign messages.  So when you send a message to the server and it
@@ -754,27 +750,27 @@ is not working.
 (Hint: you are probably going to want to cut/paste
 code from this into your implentation of the client/server code.)</p>
 
-<ol>
-<li><p>Test the business logic.</p></li>
+<p>(5.) Test the business logic.</p>
 
-<li><p>Put the business login into the server - replace the dummy functions.</p></li>
+<p>(6.) Put the business login into the server - replace the dummy functions.</p>
 
-<li><p>Test again.  This time with some existing clients like <code>curl</code>, <code>wget</code> or with a browser like <code>chrome</code> or <code>firefox</code>.
+<p>(7.) Test again.  This time with some existing clients like <code>curl</code>, <code>wget</code> or with a browser like <code>chrome</code> or <code>firefox</code>.
 <code>curl</code> and <code>wget</code> are easier to test with because you can put the tests into a script file and run them.  Brwosers will
-work but you will have to cut/paste signatures and they are large.</p></li>
+work but you will have to cut/paste signatures and they are large.</p>
 
-<li><p>You should have a working server at this point.  Now on to the client.</p></li>
+<p>(8.) You should have a working server at this point.  Now on to the client.</p>
 
-<li><p>Build a test case for the client that just pulls back some static data.   This will test that your client is
+<p>(9.) Build a test case for the client that just pulls back some static data.   This will test that your client is
 connecting to the server.  For this it is handy to have a route like <code>/api/status</code> that just sends back a response
 that you can print out and verify connectivity (In the real world this is a huge step.  Suppose that I am working on
 my computer that has to connect through outgoing security, across the internet, through a firewall, through some
 routing to a system at IBM, through IBM security, to an end point at IBM Food Trust.  Lots of stuff can go wrong.  The first
-thing that I want to know is can I talk to from my end to the correct system on that end.)</p></li>
+thing that I want to know is can I talk to from my end to the correct system on that end.)</p>
 
-<li><p>Take code from the CLI in step 4 and use that to build the client.  You will need to use some code to get/post data
-across the web.  In the case of Homework 5 this is the function <code>DoGet</code> that performs a GET request.</p></li>
-</ol>
+<p>(10.) Take code from the CLI in step 4 and use that to build the client.  You will need to use some code to get/post data
+across the web.  In the case of Homework 5 this is the function <code>DoGet</code> that performs a GET request.</p>
+
+<p>We will have a set of videos that walks thorugh the process in detail.</p>
 
 </div>
 
