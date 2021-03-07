@@ -1,17 +1,5 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+m4_include(../S21-4010/setup.m4)
 
 # Steps to build / test / client server.
 

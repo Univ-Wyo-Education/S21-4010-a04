@@ -702,11 +702,13 @@ ol {
     display: block;
     list-style-type: decimal;
 }
+.pagebreak { page-break-before: always; }
+.half { height: 200px; }
 </style>
 
 <div class="markdown-body">
 
-<p>Steps to build / test / client server.</p>
+<h1>Steps to build / test / client server.</h1>
 
 <ol>
 <li>Find out where stuff is routed.   This is where a path from a URL is converted into a function call.
@@ -714,18 +716,17 @@ The URL, &lsquo;<a href="http://Name.com:Port/path?queryParams=Values&amp;more=v
 
 <ol>
 <li><code>http</code> or <code>https</code> - this can be other protocals but these are the 2 common ones.</li>
-<li><code>name.com</code> or an IP address like <code>127.0.0.1</code> - this is the address that is used to talk to the server.</li>
+<li><code>name.com</code> or an IP address like <code>127.0.0.1</code> or <code>localhost</code> - this is the address that is used to talk to the server.</li>
 <li><code>Port</code> is a number, 80 for http, 443 for https or some other port number like 9000.</li>
 <li><code>/path</code> is some sort of an end pont path.  It has become popular to put data into the path but I usually don&rsquo;t do that.</li>
 <li><code>?queryParams=value</code> this is the set of parameters if this is a GET request.  POST / PUT / DELETE use a different format.  If this a multi-part-mime format for a file upload then it is a differnt format.  POST may have its data in JSON or XML also.
-The &ldquo;route&rdquo; or &ldquo;endpoint&rdquo; is the <code>/path</code> part.  This can be a more complex path like <code>/path/bob/xyzzy</code> and is often the location of
-a file on the system for a static file.   With a default NgNix install it will be something like <code>/var/ngnix/name.com/html/path</code>.
-This will depend on the NgNix configuraiton.</li>
+The &ldquo;route&rdquo; or &ldquo;endpoint&rdquo; is the <code>/path</code> part.  This can be a more complex path like <code>/path/bob/somefile.html</code> and is often the location of
+a file on the system for a static file.   With a default NgINX install it will be something like <code>/var/ngnix/name.com/html/path/bob/somfile.html</code>.
+With an application server (like ours) the end point is some chunk of code in the server.</li>
 </ol></li>
 </ol>
 
-<p>For homework 5 this is xyzzy
-In some projects you may need to add routes.  Add the routs if necessary.<br />
+<p>In some projects you may need to add routes.  Add the routs if necessary.<br />
 Test that the routs work with some dummy calls and just a static return data.</p>
 
 <ol>
@@ -740,14 +741,20 @@ Test that the routs work with some dummy calls and just a static return data.</p
 
 <li><p>Implement the business logic so you can call it from the command line.  This will become your automated test stuff
 for the business logic.  You will need to be able to call this and get data out so that you can have accurate data
-to test your client with.</p>
+to test your client with.   Usualy this means <code>wget</code> or <code>curl</code> for the command line.  You can also implement a dedicated
+set of code to test the API.  That usually will take longer.</p></li>
+</ol>
 
-<p>xyzzy - expaound - examples</p>
+<p>In our case some of this has been done for you look at ./sig-test - this is a command line program
+that will allow you to generate signatures and sign messages.  So when you send a message to the server and it
+falis to validate the signature - the question is do you have a valid signature or not.   Use the command
+line tool and check the signature.  If the signature is invalid - this may indicate that yoru code is working.
+If the signature is valid then you know that your implementation of signature validation in the server
+is not working.
+(Hint: you are probably going to want to cut/paste
+code from this into your implentation of the client/server code.)</p>
 
-<p>xyzzy - in this case some of this has been done for you look at ./sig-test - this is a command line program
-that will allow you to generate signatures and sign messages. (Hint: you are probably going to want to cut/paste
-code from this into your implentation of the client/server code.)</p></li>
-
+<ol>
 <li><p>Test the business logic.</p></li>
 
 <li><p>Put the business login into the server - replace the dummy functions.</p></li>

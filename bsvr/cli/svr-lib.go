@@ -7,6 +7,8 @@ import (
 
 	"github.com/Univ-Wyo-Education/S21-4010-a04/bsvr/addr"
 	"github.com/Univ-Wyo-Education/S21-4010-a04/bsvr/lib"
+	"github.com/pschlump/MiscLib"
+	"github.com/pschlump/godebug"
 )
 
 // ReadGlobalData is an intialization function to read the locally stored
@@ -24,7 +26,7 @@ func (cc *CLI) ShowBalanceJSON(acctStr string) string {
 		return fmt.Sprintf("{\"status\":\"error\",\"msg\":%q}\n", err)
 	}
 
-	return fmt.Sprintf("{ \"status\":\"success\", \"acct\": %q\n  \"value\": %d }\n", acct, cc.GetTotalValueForAccount(acct))
+	return fmt.Sprintf("{ \"status\":\"success\", \"acct\": %q,\n  \"value\": %d }\n", acct, cc.GetTotalValueForAccount(acct))
 }
 
 // ListAccounts will walk through the index and find all the accounts, construct a non-dup
@@ -105,13 +107,28 @@ func (cc *CLI) SendFundsJSON(fromStr, toStr, amountStr, signature, msg, memo str
 }
 
 func (cc *CLI) ValidateSignature(addrStr, signature, msg string) (isValid bool, err error) {
-	isValid = true
-	addr, err := addr.ParseAddr(addrStr)
+	addr, err := lib.ConvAddrStrToAddressType(addrStr)
 	if err != nil {
-		return
+		fmt.Printf("%sAT: %s - failed to convert from >%s< to address%s\n", MiscLib.ColorYellow, godebug.LF(), addrStr, MiscLib.ColorReset)
+		return false, err
 	}
-	_ = addr
+	if !lib.ValidSignature(lib.SignatureType(signature), msg, addr) { // Assignment 5 implements, just true for now.
+		fmt.Printf("%sAT: %s - signature not valid sig >%s< msg >%s<- addr %x to address%s\n", MiscLib.ColorRed, godebug.LF(), signature, msg, addr, MiscLib.ColorReset)
+		// return nil, fmt.Errorf("Signature not valid")
+		return false, err
+	}
 
-	// Test Validation of Signature at this point.
-	return cc.InstructorValidateSignature(addrStr, signature, msg)
+	isValid = true
+	return
+
+	/*
+		addr, err := addr.ParseAddr(addrStr)
+		if err != nil {
+			return
+		}
+		_ = addr
+
+		// Test Validation of Signature at this point.
+		return cc.InstructorValidateSignature(addrStr, signature, msg)
+	*/
 }

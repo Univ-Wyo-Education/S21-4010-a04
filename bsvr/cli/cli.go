@@ -195,11 +195,15 @@ func (cc *CLI) SendFundsTransaction(
 	err error,
 ) {
 
+	fmt.Printf("ATAT: %s\n", godebug.LF())
+
 	//	if isValid, err := cc.InstructorValidateSignature(from, sig, message); !isValid { // addr, sig, msg string) (isValid bool, err error) {
 	if !lib.ValidSignature(sig, message, from) { // Assignment 5 implements, just true for now.
 		// return nil, fmt.Errorf("Signature not valid")
 		return nil, err
 	}
+
+	fmt.Printf("ATAT: %s\n", godebug.LF())
 
 	// --- Homework Section for Assignment 4 ----------------------------
 	// Replace the line below with code that performs a transaction
@@ -518,7 +522,7 @@ func (cc *CLI) AppendBlock(bk *block.BlockType) {
 
 // Debug flags to turn on output in sections of the code.
 const db1 = false
-const db2 = false
+const db2 = true
 const db3 = false
 const db4 = false
 const db5 = false
